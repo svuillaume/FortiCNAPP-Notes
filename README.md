@@ -164,7 +164,8 @@ The application container needs to temporarily override its startup behavior to 
 
 1. Depending on whether your container uses **CMD** or **ENTRYPOINT**, update the task definition accordingly.  
 
-image.png
+<img width="627" height="166" alt="image" src="https://github.com/user-attachments/assets/7444f30c-f9ea-483c-b2db-b88888dcb27c" />
+
 
 2. In the **Storage and Logging** section:  
    - Mount the shared volume exported by the sidecar container.  
