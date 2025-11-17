@@ -1,12 +1,39 @@
-# FortiCNAPP SCA - how to reduce Understanding Vulnerable Library Analysis: ACF vs AVD
+# FortiCNAPP SCA - How to reduce alert noise - Application Context Filtering 
 
-Modern application security goes beyond simply identifying vulnerable libraries. 
+Alert noise in cloud security is when you get tons of alerts, most of them not really important, which can overwhelm your security team. 
+It happens because cloud systems produce so much data, and rules aren’t always set up right. The problem is, it makes it easy for real attacks to hide among all the noise.
 
-It's essential to understand **how libraries are used** within an application to prioritize vulnerabilities based on real-world impact. FortiCNAPP offers 2 features:
+Moderm and Cloud Native application security go beyond simply identifying vulnerable libraries. 
 
-- **Application Context Filtering (ACF)** – Analyzes **all references** to a vulnerable library in the source code. Currently supported for **Go, Java, and Kotlin**.  
+It’s important to know how libraries are actually used in your application so you can focus on the vulnerabilities that matter most. FortiCNAPP offers two key features to help with this:
+
+- **Application Context Filtering (ACF)** – Analyzes **all references** to a vulnerable library in the source code. Currently supported for **Go, Java, and Kotlin**.
+    ACF is available as part of Lacework FortiCNAPP’s CLI. To enable ACF when running a Software Composition Analysis (SCA) scan, you simply include the --acf flag in your command.
+## Run SCA with ACF
+
+You can run the SCA scan with **Application Context Filtering (ACF)** enabled using the `--acf` argument. Because the output can be large, it’s recommended to save the results to a JSON file for easier analysis.
+
+### Example Command
+
+```bash
+lacework sca scan ./Projects/log4j-sample --acf -o ./Projects/log4j-sample/acf-results.json
 
 - **Active Vulnerability Detection (AVD)** – Detect vulnerable functions that are **actually executed**.
+    Enabled in the FortiCNAPP agent
+    At present, the integration between Lacework FortiCNAPP SCA and Active Vulnerability Detection is available
+
+## Run SCA with Active Vulnerability Detection (AVD)
+
+To enable **Active Vulnerability Detection (AVD)** during an SCA scan, use the `--active-only` flag. This tells Lacework FortiCNAPP SCA to filter results and show only vulnerabilities that are **actively used** in your running applications.
+
+### Example Command
+
+```bash
+lacework sca scan ./Projects/nodejs-goof --active-only
+
+In the CLI.
+
+Within CI/CD integrations.
 
 AVD → Reduces alerts by checking what’s actually used during runtime
 ACF → Reduces alerts by checking what parts of your code reference the library
